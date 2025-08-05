@@ -42,10 +42,10 @@ name = "pypi-public"
 url = "https://pypi.org/simple/"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 tqdm = "^4.66.4"
 typing-extensions = "^4.12.2"
-numba = "^0.60.0"
+numba = "^0.61.2"
 numpy = "^1"
 pandas = "^2.2.2"
 
