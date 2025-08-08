@@ -61,6 +61,7 @@ def hallmark(
             hm = translate(hm, columns=["genesymbol"], target_organism=organism, verbose=verbose)
         hm = hm.rename(columns={"geneset": "source", "genesymbol": "target"})
         hm = hm.drop_duplicates(["source", "target"]).reset_index(drop=True)
+        return hm
 
     if as_future:
         with ThreadPoolExecutor(max_workers=1) as executor:
