@@ -1,4 +1,4 @@
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future, ThreadPoolExecutor
 
 import pandas as pd
 
@@ -14,7 +14,7 @@ def hallmark(
     license: str = "academic",
     verbose: bool = False,
     as_future: bool = False,
-) -> pd.DataFrame:
+) -> pd.DataFrame | Future:
     """
     Hallmark gene sets :cite:p:`msigdb`.
 
