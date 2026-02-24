@@ -1,7 +1,7 @@
+from importlib.metadata import version
+
 import pandas as pd
 import requests
-
-from importlib.metadata import version
 
 from decoupler._docs import docs
 from decoupler._download import URL_DBS, _bytes_to_pandas, _download
@@ -31,12 +31,12 @@ def show_resources() -> pd.DataFrame:
     """
     __version__ = version("decoupler")
     headers = {"User-Agent": f"decoupler/{__version__} (https://github.com/scverse/decoupler)"}
-    ann_url = 'https://omnipathdb.org/resources'
+    ann_url = "https://omnipathdb.org/resources"
     response = requests.get(ann_url)
     data = response.json()
     df = pd.DataFrame(
-        [(name, info.get("license").get('purpose'), info.get("license").get('sharing')) for name, info in data.items()],
-        columns=["name", "license", 'sharing']
+        [(name, info.get("license").get("purpose"), info.get("license").get("sharing")) for name, info in data.items()],
+        columns=["name", "license", "sharing"],
     )
     return df
 
