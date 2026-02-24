@@ -1,6 +1,8 @@
 import pandas as pd
 import requests
 
+from importlib.metadata import version
+
 from decoupler._docs import docs
 from decoupler._download import URL_DBS, _bytes_to_pandas, _download
 from decoupler._log import _log
@@ -17,7 +19,7 @@ def show_resources() -> pd.DataFrame:
 
     Returns
     -------
-    List of available resources to query with `decoupler.op.resource`.
+    DataFrame of available resources to query with `decoupler.op.resource`.
 
     Example
     -------
@@ -27,13 +29,15 @@ def show_resources() -> pd.DataFrame:
 
         dc.op.show_resources()
     """
-    ann = pd.read_csv("https://omnipathdb.org/queries/annotations", sep="\t")
-    ann = ann.set_index("argument").loc["databases"].str.split(";")["values"]
-    url = "https://omnipathdb.org/resources"
-    response = requests.get(url)
-    lcs = response.json()
-    df = pd.DataFrame(ann, columns=["name"])
-    df["license"] = [lcs[a]["license"]["purpose"] if a in lcs else None for a in ann]
+    __version__ = version("decoupler")
+    headers = {"User-Agent": f"decoupler/{__version__} (https://github.com/scverse/decoupler)"}
+    ann_url = 'https://omnipathdb.org/resources'
+    response = requests.get(ann_url)
+    data = response.json()
+    df = pd.DataFrame(
+        [(name, info.get("license").get('purpose'), info.get("license").get('sharing')) for name, info in data.items()],
+        columns=["name", "license", 'sharing']
+    )
     return df
 
 
