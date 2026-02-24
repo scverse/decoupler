@@ -31,8 +31,8 @@ def show_resources() -> pd.DataFrame:
     """
     __version__ = version("decoupler")
     headers = {"User-Agent": f"decoupler/{__version__} (https://github.com/scverse/decoupler)"}
-    ann_url = "https://omnipathdb.org/resources"
-    response = requests.get(ann_url)
+    ann_url = 'https://omnipathdb.org/resources'
+    response = requests.get(ann_url, headers=headers)
     data = response.json()
     df = pd.DataFrame(
         [(name, info.get("license").get("purpose"), info.get("license").get("sharing")) for name, info in data.items()],
