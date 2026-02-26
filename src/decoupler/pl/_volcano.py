@@ -15,7 +15,7 @@ def volcano(
     y: str,
     net: pd.DataFrame | None = None,
     name: str | None = None,
-    top: int = 5,
+    top: int | str | list[str] = 5,
     thr_stat: float = 0.5,
     thr_sign: float = 0.05,
     max_stat: float | None = None,
@@ -40,7 +40,8 @@ def volcano(
     name
         Name of the source to subset ``net``.
     top
-        Number of top differentially abundant features to show.
+        Number of top differentially abundant features to show. Can also be a gene name
+        (``str``) or a list of gene names (``list[str]``) to annotate specific features.
     thr_stat
         Significance threshold for change statitsics.
     thr_sign
@@ -76,7 +77,14 @@ def volcano(
     assert isinstance(data, pd.DataFrame), m
     assert {x, y}.issubset(data.columns), m
     assert (net is None) == (name is None), "net and name must be both defined or both None"
-    assert isinstance(top, int) and top > 0, "top must be int and > 0"
+    if isinstance(top, str):
+        top = [top]
+    if isinstance(top, list):
+        assert all(isinstance(g, str) for g in top), "top must contain only str gene names"
+        missing = [g for g in top if g not in data.index]
+        assert not missing, f"gene names not found in data.index: {missing}"
+    else:
+        assert isinstance(top, int) and top > 0, "top must be int, str, list[str], and int must be > 0"
     assert isinstance(thr_stat, int | float) and thr_stat > 0, "thr_stat must be numeric and > 0"
     assert isinstance(thr_sign, int | float) and thr_sign > 0, "thr_sign must be numeric and > 0"
     if max_stat is None:
@@ -127,8 +135,11 @@ def volcano(
     bp.ax.set_xlabel(x)
     bp.ax.set_ylabel(rf"$-\log_{{10}}({y})$")
     # Show top sign features
-    signs = df[up_msk | dw_msk].sort_values("pval", ascending=False)
-    signs = signs.iloc[:top]
+    if isinstance(top, list):
+        signs = df[df.index.isin(top)]
+    else:
+        signs = df[up_msk | dw_msk].sort_values("pval", ascending=False)
+        signs = signs.iloc[:top]
     texts = []
     for x, y, s in zip(signs["stat"], signs["pval"], signs.index, strict=False):
         texts.append(bp.ax.text(x, y, s))

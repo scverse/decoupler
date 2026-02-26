@@ -32,3 +32,21 @@ def test_volcano(
     else:
         with pytest.raises(AssertionError):
             dc.pl.volcano(data=deg, x="stat", y="padj", net=net, name=name, return_fig=True)
+
+
+@pytest.mark.parametrize(
+    "top,a_err",
+    [
+        ["G03", False],
+        [["G01", "G03"], False],
+        [["G01", "NONEXISTENT"], True],
+    ],
+)
+def test_volcano_top_genes(deg, top, a_err):
+    if not a_err:
+        fig = dc.pl.volcano(data=deg, x="stat", y="padj", top=top, return_fig=True)
+        assert isinstance(fig, Figure)
+        plt.close(fig)
+    else:
+        with pytest.raises(AssertionError):
+            dc.pl.volcano(data=deg, x="stat", y="padj", top=top, return_fig=True)

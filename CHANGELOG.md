@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## 2.1.5
+
+### Added
+- `pl.volcano` now accepts a gene name (`str`) or list of gene names (`list[str]`) for the `top` parameter to annotate specific features on volcano plots
+
 ## 2.1.4
 
 ### Changes
