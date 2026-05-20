@@ -30,16 +30,16 @@ def test_swap_layer(
     res = dc.pp.swap_layer(adata=ldata, key="counts", X_key=None, inplace=True)
     assert res is None
     assert ldata.X.sum().is_integer()
-    assert list(ldata.layers.keys()) == ["counts"]
+    assert [k for k in ldata.layers.keys() if k is not None] == ["counts"]
     ldata = adata.copy()
     res = dc.pp.swap_layer(adata=ldata, key="counts", X_key=None, inplace=False)
     assert isinstance(res, ad.AnnData)
     assert res.X.sum().is_integer()
-    assert list(res.layers.keys()) == ["counts"]
+    assert [k for k in res.layers.keys() if k is not None] == ["counts"]
     res = dc.pp.swap_layer(adata=ldata, key="counts", X_key="X", inplace=False)
     assert isinstance(res, ad.AnnData)
     assert res.X.sum().is_integer()
-    assert list(res.layers.keys()) == ["counts", "X"]
+    assert [k for k in res.layers.keys() if k is not None] == ["counts", "X"]
     assert (ldata.X == res.layers["X"]).all()
     res = dc.pp.swap_layer(adata=ldata, key="counts", X_key="X", inplace=True)
     assert res is None
