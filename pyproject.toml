@@ -84,11 +84,10 @@ full = [
 [tool.hatch]
 envs.default.installer = "uv"
 envs.default.dependency-groups = [ "dev" ]
-envs.docs.dependency-groups = [ "doc" ]
 envs.docs.scripts.build = "sphinx-build -M html docs docs/_build -W {args}"
-envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
 envs.docs.scripts.clean = "git clean -fdX -- {args:docs}"
-envs.hatch-test.dependency-groups = [ "dev", "test" ]
+envs.docs.scripts.open = "python -m webbrowser -t docs/_build/html/index.html"
+envs.docs.dependency-groups = [ "doc" ]
 envs.hatch-test.matrix = [
   # Test the lowest and highest supported Python versions with normal deps
   { deps = [ "stable" ], python = [ "3.11", "3.14" ] },
@@ -98,8 +97,9 @@ envs.hatch-test.matrix = [
 # If the matrix variable `deps` is set to "pre",
 # set the environment variable `UV_PRERELEASE` to "allow".
 envs.hatch-test.overrides.matrix.deps.env-vars = [
-  { key = "UV_PRERELEASE", value = "allow", if = [ "pre" ] },
+  { value = "allow", key = "UV_PRERELEASE", if = [ "pre" ] },
 ]
+envs.hatch-test.dependency-groups = [ "dev", "test" ]
 
 [tool.ruff]
 line-length = 120
@@ -140,11 +140,11 @@ lint.per-file-ignores."tests/*" = [ "D" ]
 lint.pydocstyle.convention = "numpy"
 
 [tool.pytest]
-strict = true
-testpaths = [ "tests" ]
 addopts = [
   "--import-mode=importlib", # allow using test files with same name
 ]
+strict = true
+testpaths = [ "tests" ]
 
 [tool.coverage]
 run.omit = [
