@@ -26,10 +26,8 @@
 [badge-adown]: https://static.pepy.tech/badge/decoupler
 [badge-stars]: https://img.shields.io/github/stars/scverse/decoupler?style=flat&logo=github&color=yellow
 
-`decoupler` is a python package containing different enrichment statistical
-methods to extract biologically driven scores
-from omics data within a unified framework. This is its faster and memory efficient Python implementation,
-a deprecated version in R can be found [here](https://github.com/saezlab/decoupler).
+`decoupler` is a python package containing different enrichment statistical methods to extract biologically driven scores from omics data within a unified framework.
+This is its faster and memory efficient Python implementation, a deprecated version in R can be found [here](https://github.com/saezlab/decoupler).
 
 [//]: # (numfocus-fiscal-sponsor-attribution)
 
@@ -52,7 +50,7 @@ in particular, the [API documentation][].
 
 ## Installation
 
-You need to have Python 3.10 or newer installed on your system.
+You need to have Python 3.11 or newer installed on your system.
 If you don't have Python installed, we recommend installing [uv][].
 
 There are several alternative options to install decoupler:
