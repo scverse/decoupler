@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "decoupler"
-version = "2.1.6"
+version = "2.2.0"
 description = "Python package to perform enrichment analysis from omics data."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -38,6 +38,7 @@ dependencies = [
 urls.Documentation = "https://decoupler.readthedocs.io/"
 urls.Homepage = "https://github.com/scverse/decoupler"
 urls.Source = "https://github.com/scverse/decoupler"
+scripts.decoupler-install-skills = "decoupler._skills.install:main"
 
 [dependency-groups]
 dev = [

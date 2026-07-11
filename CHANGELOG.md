@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## 2.2.0
+
+### Added
+- Bundled a Claude Code [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) that teaches coding agents to use decoupler correctly (method selection, calling conventions, output locations, priors, datasets, and benchmarking)
+- Added the `decoupler-install-skills` console script to install the skill into `~/.claude/skills/decoupler/` (use `--force` to refresh after upgrading, or `--print-path` to point `CLAUDE_SKILLS_PATH` at the bundled copy in place)
+
 ## 2.1.6
 
 ### Bugfixes
