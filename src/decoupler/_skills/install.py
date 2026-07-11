@@ -24,9 +24,7 @@ if you would rather point Claude Code at the package in place than copy it).
 import argparse
 import shutil
 import sys
-
 from pathlib import Path
-
 
 SKILL_NAME = "decoupler"
 
@@ -40,7 +38,6 @@ def _bundled_skill_dir() -> Path:
         The ``data/`` directory containing the bundled ``SKILL.md`` and
         ``references/``.
     """
-
     return Path(__file__).resolve().parent / "data"
 
 
@@ -52,7 +49,6 @@ def _default_dest() -> Path:
     dest : pathlib.Path
         ``~/.claude/skills/decoupler``.
     """
-
     return Path.home() / ".claude" / "skills" / SKILL_NAME
 
 
@@ -78,12 +74,10 @@ def install_skill(dest: Path | None = None, force: bool = False) -> Path:
     dest : pathlib.Path
         The directory the skill was installed into.
     """
-
     src = _bundled_skill_dir()
     if not (src / "SKILL.md").is_file():
         raise FileNotFoundError(
-            "Bundled skill not found at {}. The package may be installed "
-            "without its skill data.".format(src)
+            f"Bundled skill not found at {src}. The package may be installed without its skill data."
         )
 
     if dest is None:
@@ -91,15 +85,11 @@ def install_skill(dest: Path | None = None, force: bool = False) -> Path:
 
     if dest.exists():
         if not force:
-            raise FileExistsError(
-                "{} already exists. Re-run with --force to overwrite.".format(dest)
-            )
+            raise FileExistsError(f"{dest} already exists. Re-run with --force to overwrite.")
         shutil.rmtree(dest)
 
     dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(
-        src, dest, ignore=shutil.ignore_patterns(".ipynb_checkpoints", "__pycache__")
-    )
+    shutil.copytree(src, dest, ignore=shutil.ignore_patterns(".ipynb_checkpoints", "__pycache__"))
     return dest
 
 
@@ -116,7 +106,6 @@ def main(argv: list[str] | None = None) -> int:
     code : int
         Process exit code; 0 on success and 1 on a handled error.
     """
-
     parser = argparse.ArgumentParser(
         prog="decoupler-install-skills",
         description="Install the decoupler Agent Skill for Claude Code.",
@@ -127,9 +116,7 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="Destination directory (default: ~/.claude/skills/decoupler).",
     )
-    parser.add_argument(
-        "--force", action="store_true", help="Overwrite an existing installation."
-    )
+    parser.add_argument("--force", action="store_true", help="Overwrite an existing installation.")
     parser.add_argument(
         "--print-path",
         action="store_true",
@@ -144,10 +131,10 @@ def main(argv: list[str] | None = None) -> int:
     try:
         dest = install_skill(dest=args.dest, force=args.force)
     except (FileExistsError, FileNotFoundError) as e:
-        print("error: {}".format(e), file=sys.stderr)
+        print(f"error: {e}", file=sys.stderr)
         return 1
 
-    print("Installed decoupler skill to {}".format(dest))
+    print(f"Installed decoupler skill to {dest}")
     print("It will be available to Claude Code in your next session.")
     return 0
 

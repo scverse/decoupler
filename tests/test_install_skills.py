@@ -1,7 +1,6 @@
 import re
 import subprocess
 import sys
-
 from pathlib import Path
 
 import pytest
@@ -12,7 +11,6 @@ from decoupler._skills.install import (
     _default_dest,
     install_skill,
 )
-
 
 ###
 # Helpers
@@ -67,9 +65,9 @@ def test_internal_links_all_resolve():
     for f in [data / "SKILL.md", *refs.glob("*.md")]:
         for target in _link_targets(f.read_text()):
             if target not in existing:
-                broken.append("{} -> {}".format(f.name, target))
+                broken.append(f"{f.name} -> {target}")
 
-    assert broken == [], "broken internal links: {}".format(broken)
+    assert broken == [], f"broken internal links: {broken}"
 
 
 ###
@@ -154,9 +152,7 @@ def test_console_script_print_path():
     if not exe.exists():
         pytest.skip("decoupler-install-skills entry point is not installed")
 
-    result = subprocess.run(
-        [str(exe), "--print-path"], capture_output=True, text=True
-    )
+    result = subprocess.run([str(exe), "--print-path"], capture_output=True, text=True)
 
     assert result.returncode == 0
     assert result.stdout.strip().endswith("data")
