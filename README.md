@@ -79,6 +79,20 @@ mamba create -n=dcp conda-forge::decoupler-py
 pip install git+https://github.com/scverse/decoupler.git@main
 ```
 
+## Claude Code Skill
+
+decoupler ships an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for [Claude Code](https://claude.com/claude-code) that teaches the agent to use the library correctly. Install it once into your personal skills directory:
+
+```bash
+decoupler-install-skills
+```
+
+This copies the skill to `~/.claude/skills/decoupler/`, making it available in **every** project (re-run with `--force` after upgrading). Once installed, just ask Claude Code to do decoupler tasks ("find the most active TFs in this cell cluster", "score hallmark gene sets with ora", "build a consensus across methods") and the skill is consulted automatically. To avoid copying into your home directory, point Claude Code at the bundled copy instead:
+
+```bash
+export CLAUDE_SKILLS_PATH="$(decoupler-install-skills --print-path)"
+```
+
 ## Release notes
 
 See the [changelog][].
