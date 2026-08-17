@@ -77,6 +77,11 @@ def query_set(
             d = len(set_d)
         else:
             d = int(n_bg - a - b - c)
+            assert d >= 0, (
+                f"n_bg={n_bg} must be larger or equal than the number of features to test for source={source} "
+                f"({a + b + c}), otherwise the contingency table is invalid. Increase n_bg or set n_bg=None "
+                "to use a feature specific background"
+            )
         od = _oddsr(a=a, b=b, c=c, d=d, ha_corr=ha_corr, log=True)
         _, pv = sts.fisher_exact([[a, b], [c, d]], alternative=alternative)
         df.append([source, od, pv])

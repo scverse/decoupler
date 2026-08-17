@@ -1,6 +1,7 @@
 import math
 
 import numpy as np
+import pandas as pd
 import pytest
 import scipy.sparse as sps
 import scipy.stats as sts
@@ -40,7 +41,7 @@ def test_runora(
     cnct, starts, offsets = idxmat
     row = sts.rankdata(X[0], method="ordinal")
     ranks = np.arange(row.size, dtype=np.int_)
-    row = ranks[(row > 2) | (row < 0)]
+    row = ranks[row > (row.size - 2)]
     es, pv = dc.mt._ora._runora.py_func(
         row=set(row),
         ranks=set(ranks),
@@ -77,7 +78,7 @@ def test_func_ora(
     rnk = set(ranks)
     for i in range(st_es.shape[0]):
         row = sts.rankdata(X[i], method="ordinal")
-        row = set(ranks[row > n_up])
+        row = set(ranks[row > (X.shape[1] - n_up)])
         for j in range(st_es.shape[1]):
             fset = dc.pp.net._getset(cnct=cnct, starts=starts, offsets=offsets, j=j)
             fset = set(fset)
@@ -100,3 +101,70 @@ def test_func_ora(
             st_es[i, j], _ = np.log(es)
     assert np.isclose(dc_es, st_es).all()
     assert np.isclose(dc_pv, st_pv).all()
+
+
+@pytest.mark.parametrize(
+    "n_up,n_bm,obs_idxs",
+    [
+        [5, 0, [15, 16, 17, 18, 19]],
+        [1, 0, [19]],
+        [20, 0, list(range(20))],
+        [3, 2, [0, 1, 17, 18, 19]],
+        [0.5, 0, [19]],
+    ],
+)
+def test_func_ora_selection(
+    n_up,
+    n_bm,
+    obs_idxs,
+):
+    # Row values are ascending, so the top n_up features are the last ones
+    nvar = 20
+    X = np.arange(nvar, dtype=float).reshape(1, nvar)
+    var = np.array([f"G{i:02d}" for i in range(nvar)])
+    net = pd.DataFrame(
+        {
+            "source": ["S1"] * 5,
+            "target": var[[15, 16, 17, 18, 19]],
+            "weight": [1.0] * 5,
+        }
+    )
+    sources, cnct, starts, offsets = dc.pp.idxmat(features=var, net=net, verbose=False)
+    dc_es, dc_pv = dc.mt._ora._func_ora(
+        mat=X, cnct=cnct, starts=starts, offsets=offsets, n_up=n_up, n_bm=n_bm, n_bg=None
+    )
+    # Build the expected contingency table from the features that should be selected
+    row = set(obs_idxs)
+    fset = {15, 16, 17, 18, 19}
+    a = len(row & fset)
+    b = len(fset - row)
+    c = len(row - fset)
+    d = nvar - len(row | fset)
+    st_es = np.log(((a + 0.5) * (d + 0.5)) / ((b + 0.5) * (c + 0.5)))
+    st_pv = sts.fisher_exact([[a, b], [c, d]])[1]
+    assert np.isclose(dc_es[0, 0], st_es)
+    assert np.isclose(dc_pv[0, 0], st_pv)
+
+
+def test_func_ora_validate(
+    mat,
+    idxmat,
+):
+    X, obs, var = mat
+    cnct, starts, offsets = idxmat
+    nvar = X.shape[1]
+    kwargs = {"mat": X, "cnct": cnct, "starts": starts, "offsets": offsets}
+    with pytest.raises(AssertionError, match="overlap"):
+        dc.mt._ora._func_ora(**kwargs, n_up=nvar, n_bm=1, n_bg=None)
+    with pytest.raises(AssertionError, match="contingency table is invalid"):
+        dc.mt._ora._func_ora(**kwargs, n_up=5, n_bm=0, n_bg=4)
+
+
+def test_ora_wide():
+    # Selecting the top 5% of a wide matrix must not exceed n_bg
+    adata, net = dc.ds.toy(nobs=5, nvar=1_000, seed=42, verbose=False)
+    dc.mt.ora(adata, net, tmin=3, n_bg=100)
+    es = adata.obsm["score_ora"].values
+    pv = adata.obsm["padj_ora"].values
+    assert np.isfinite(es).all()
+    assert ((pv >= 0) & (pv <= 1)).all()
