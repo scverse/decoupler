@@ -231,7 +231,7 @@ def _func_ora(
 
     n_up
         Number of top-ranked features, based on their magnitude, to select as observed features.
-        If ``None``, the top 5% of positive features are selected.
+        If ``None``, the top 5% of features are selected.
     n_bm
         Number of bottom-ranked features, based on their magnitude, to select as observed features.
     %(n_bg)s
@@ -261,6 +261,13 @@ def _func_ora(
     assert isinstance(n_up, int | float) and n_up > 0, "n_up must be numeric and > 0"
     assert isinstance(n_bm, int | float) and n_bm >= 0, "n_bm must be numeric and positive"
     assert isinstance(n_bg, int | float) and n_bg >= 0, "n_bg must be numeric and positive"
+    n_up, n_bm = int(np.ceil(n_up)), int(np.ceil(n_bm))
+    assert n_up + n_bm <= nvar, f"For nvar={nvar}, n_up={n_up} and n_bm={n_bm} overlap, decrease any of them"
+    assert n_bg == 0 or n_bg >= n_up + n_bm, (
+        f"n_bg={n_bg} must be larger or equal than the number of selected features n_up + n_bm={n_up + n_bm}, "
+        "otherwise the contingency table is invalid. Increase n_bg, decrease n_up or n_bm, "
+        "or set n_bg=None to use a feature specific background"
+    )
     m = f"ora - calculating {nsrc} scores across {nobs} observations with n_up={n_up}, n_bm={n_bm}, n_bg={n_bg}"
     _log(m, level="info", verbose=verbose)
     es = np.zeros((nobs, nsrc))
@@ -273,7 +280,8 @@ def _func_ora(
             row = mat[i]
         # Find ranks
         row = sts.rankdata(row, method="ordinal")
-        row = ranks[(row > n_up) | (row < n_bm)]
+        # Ranks are ascending, the top n_up features are the ones with the largest ranks
+        row = ranks[(row > (nvar - n_up)) | (row <= n_bm)]
         es[i], pv[i] = _runora(
             row=set(row), ranks=set(ranks), cnct=cnct, starts=starts, offsets=offsets, n_bg=n_bg, ha_corr=ha_corr
         )

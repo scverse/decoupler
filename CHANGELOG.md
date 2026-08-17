@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning][].
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## 2.2.1
+
+### Bugfixes
+- Fixed `mt.ora` selecting the bottom `nvar - n_up` features instead of the top `n_up` ones. Ranks are ascending, so the threshold is now `nvar - n_up`, restoring the behaviour of `decoupler<2`. With the default `n_up` (top 5%) this selected 95% of the features as observed, which also made `mt.ora` fail with `invalid contingency table` whenever `nvar - n_up` exceeded `n_bg` (#346)
+- Fixed `n_bm` in `mt.ora` selecting the bottom `n_bm - 1` features instead of `n_bm`
+- `mt.ora` now validates that `n_up` and `n_bm` do not overlap and that `n_bg` is large enough for the number of selected features, instead of failing inside the Fisher exact test
+- `mt.query_set` now raises an informative error when `n_bg` is smaller than the number of features to test, instead of failing inside `scipy.stats.fisher_exact`
+
 ## 2.2.0
 
 ### Added
