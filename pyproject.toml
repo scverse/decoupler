@@ -148,11 +148,11 @@ strict = true
 testpaths = [ "tests" ]
 
 [tool.coverage]
+run.source = [ "decoupler" ]
 run.omit = [
   "**/test_*.py",
 ]
 run.patch = [ "subprocess" ]
-run.source = [ "decoupler" ]
 
 [tool.cruft]
 skip = [
