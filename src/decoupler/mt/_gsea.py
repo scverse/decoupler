@@ -27,7 +27,7 @@ def _ridx(
     seed: int | None,
 ):
     idx = np.tile(np.arange(nvar), (times, 1))
-    if seed:
+    if seed is not None:
         rng = np.random.default_rng(seed=seed)
         for i in idx:
             rng.shuffle(i)
