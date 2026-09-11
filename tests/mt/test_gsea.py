@@ -112,3 +112,21 @@ def test_func_gsea(
         seed=seed,
     )
     assert (gp_es - dc_es).abs().values.max() < 0.10
+
+
+@pytest.mark.parametrize("seed", [0, 42])
+def test_ridx_matches_seeded_shuffles(seed):
+    expected = np.tile(np.arange(20), (100, 1))
+    rng = np.random.default_rng(seed)
+    for row in expected:
+        rng.shuffle(row)
+    actual = dc.mt._gsea._ridx(times=100, nvar=20, seed=seed)
+    np.testing.assert_array_equal(actual, expected)
+    np.testing.assert_array_equal(actual, dc.mt._gsea._ridx(times=100, nvar=20, seed=seed))
+
+
+def test_ridx_none_retains_identity():
+    np.testing.assert_array_equal(
+        dc.mt._gsea._ridx(times=3, nvar=20, seed=None),
+        np.tile(np.arange(20), (3, 1)),
+    )
