@@ -104,6 +104,12 @@ def msvisium(
     # Filter vars
     msk_var = adata.X.getnnz(axis=0) > 9
     adata = adata[:, msk_var].copy()
+    # Normalize
+    import scanpy as sc
+
+    sc.pp.normalize_total(adata, target_sum=1e4)
+    sc.pp.log1p(adata)
+    adata.layers["norm"] = adata.X.copy()
     m = f"generated AnnData with shape={adata.shape}"
     _log(m, level="info", verbose=verbose)
     return adata

@@ -631,7 +631,7 @@ def filter_by_expr(
 @docs.dedent
 def filter_by_prop(
     adata: AnnData,
-    min_prop: float = 0.2,
+    min_prop: float = 0.1,
     min_smpls: int = 2,
     inplace: bool = True,
 ) -> None | np.ndarray:
