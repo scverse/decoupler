@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning][].
 - Fixed `n_bm` in `mt.ora` selecting the bottom `n_bm - 1` features instead of `n_bm`
 - `mt.ora` now validates that `n_up` and `n_bm` do not overlap and that `n_bg` is large enough for the number of selected features, instead of failing inside the Fisher exact test
 - `mt.query_set` now raises an informative error when `n_bg` is smaller than the number of features to test, instead of failing inside `scipy.stats.fisher_exact`
+- Fixed `mt.gsea` not shuffling the permutation indices when `seed=0`, which produced identical permutations and invalid p-values (#355)
 
 ## 2.2.0
 
