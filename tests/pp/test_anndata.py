@@ -266,7 +266,7 @@ def test_filter_by_prop(
     inplace,
 ):
     f_pdata = pdata.copy()
-    res = dc.pp.filter_by_prop(adata=f_pdata, inplace=inplace)
+    res = dc.pp.filter_by_prop(adata=f_pdata, min_prop=0.2, inplace=inplace)
     if inplace:
         assert res is None
         assert f_pdata.shape[1] < pdata.shape[1]
