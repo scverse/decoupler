@@ -115,9 +115,9 @@ to infer biological activities from omics data. Bioinformatics Advances.
 [scverse]: https://scverse.org/
 [issue tracker]: https://github.com/scverse/decoupler/issues
 [tests]: https://github.com/scverse/decoupler/actions/workflows/test.yaml
-[documentation]: https://decoupler.readthedocs.io
-[changelog]: https://decoupler.readthedocs.io/en/latest/changelog.html
-[api documentation]: https://decoupler.readthedocs.io/en/latest/api.html
+[documentation]: https://decoupler.scverse.org/
+[changelog]: https://decoupler.scverse.org/page/changelog.html
+[api documentation]: https://decoupler.scverse.org/page/api.html
 [pypi]: https://pypi.org/project/decoupler
 [down]: https://pepy.tech/project/decoupler
 [conda]: https://anaconda.org/conda-forge/decoupler-py

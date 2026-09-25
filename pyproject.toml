@@ -36,7 +36,7 @@ dependencies = [
   "tqdm",
 ]
 # https://docs.pypi.org/project_metadata/#project-urls
-urls.Documentation = "https://decoupler.readthedocs.io/"
+urls.Documentation = "https://decoupler.scverse.org/"
 urls.Homepage = "https://github.com/scverse/decoupler"
 urls.Source = "https://github.com/scverse/decoupler"
 scripts.decoupler-install-skills = "decoupler._skills.install:main"
