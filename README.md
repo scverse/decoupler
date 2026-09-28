@@ -102,6 +102,13 @@ See the [changelog][].
 For questions and help requests, you can reach out in the [scverse discourse][].
 If you found a bug, please use the [issue tracker][].
 
+## License
+Enrichment methods inside decoupler can be used for academic or commercial purposes, except `viper` which holds a non-commercial license. 
+
+The data redistributed by OmniPath does not have a single license, each original resource has its own. By default, `decoupler`
+assumes an academic license, but commercial or nonprofit licenses can be specified in the `license` parameter of `decoupler`'s OmniPath functions.
+[Here](https://omnipathdb.org/info) one can find the license information of all the resources in OmniPath.
+
 ## Citation
 
 > Badia-i-Mompel P., Vélez Santiago J., Braunger J., Geiss C., Dimitrov D.,
