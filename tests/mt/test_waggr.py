@@ -52,3 +52,21 @@ def test_waggr_pvalues():
     # A constant score is never more extreme than its permutations
     es, pv = dc.mt._waggr._func_waggr(mat=mat, adj=adj, fun=lambda x, w: 0, times=times, seed=42)
     assert (pv == 1).all()
+
+
+def test_waggr_workqueue():
+    # Nested parallel regions abort the process under numba's workqueue threading layer
+    import os
+    import subprocess
+    import sys
+
+    code = (
+        "import numpy as np, decoupler as dc\n"
+        "rng = np.random.default_rng(0)\n"
+        "mat = rng.normal(size=(20, 60))\n"
+        "adj = np.repeat(np.eye(4), 15, axis=0)\n"
+        "dc.mt._waggr._func_waggr(mat=mat, adj=adj, fun='wmean', times=10)\n"
+    )
+    env = {**os.environ, "NUMBA_THREADING_LAYER": "workqueue"}
+    res = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True)
+    assert res.returncode == 0, res.stderr
