@@ -102,11 +102,11 @@ def _nesrank(
     pos_null_sum = pos_null_msk.sum()
     neg_null_sum = neg_null_msk.sum()
     if (es >= 0) and (pos_null_sum > 0):
-        pval = (null[pos_null_msk] >= es).sum() / pos_null_sum
+        pval = ((null[pos_null_msk] >= es).sum() + 1) / (pos_null_sum + 1)
         pos_null_mean = null[pos_null_msk].mean()
         nes = es / pos_null_mean
     elif (es < 0) and (neg_null_sum > 0):
-        pval = (null[neg_null_msk] <= es).sum() / neg_null_sum
+        pval = ((null[neg_null_msk] <= es).sum() + 1) / (neg_null_sum + 1)
         neg_null_mean = null[neg_null_msk].mean()
         nes = -es / neg_null_mean
     else:
@@ -199,12 +199,14 @@ def _func_gsea(
 
     .. math::
 
-        p_{value}=\frac{ES_{rand} \geq ES}{P}
+        p_{value} = \begin{cases} \frac{1 + \#\{ES_{rand} \geq ES\}}{1 + P_{+}} & \text{if } ES \geq 0 \\ \frac{1 + \#\{ES_{rand} \leq ES\}}{1 + P_{-}} & \text{if } ES < 0 \end{cases}
 
     Where:
 
-    - :math:`ES_{rand}` are the enrichment scores of the random permutations
-    - :math:`P` is the total number of permutations
+    - :math:`ES_{rand}` are the enrichment scores of the random permutations with the same sign as :math:`ES`
+    - :math:`P_{+}` and :math:`P_{-}` are the numbers of random permutations with positive and negative scores
+
+    The observed score is counted as one of the permutations, so that :math:`p_{value}` is never 0 :cite:`phipson2010`.
 
     Additionaly, :math:`ES` is updated to a normalized enrichment score :math:`NES`.
 

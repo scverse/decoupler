@@ -59,6 +59,34 @@ def test_nesrank(
     nes, pval = dc.mt._gsea._nesrank.py_func(ridx=ridx, row=row, rnks=rnks, set_msk=set_msk, dec=dec, es=es)
     assert isinstance(nes, float)
     assert isinstance(pval, float)
+    # Two of the six permuted scores (0.9, 0, 0, 0, 0, 0.9) reach the observed score
+    assert np.isclose(pval, (2 + 1) / (6 + 1))
+
+
+def test_gsea_pvalues_not_zero():
+    rng = np.random.default_rng(0)
+    nvar, times = 500, 100
+    row = rng.normal(size=nvar)
+    row[:20] += 5.0
+    cnct = np.arange(20)
+    starts, offsets = np.array([0]), np.array([20])
+    ridx = dc.mt._gsea._ridx(times=times, nvar=nvar, seed=42)
+    es, nes, pv = dc.mt._gsea._stsgsea.py_func(row=row, cnct=cnct, starts=starts, offsets=offsets, ridx=ridx)
+    assert es[0] > 0
+    # No permutation reaches the observed score, so the p-value is the smallest one the permutations support
+    order = np.argsort(-row)
+    set_msk = np.zeros(nvar, dtype=bool)
+    set_msk[cnct] = True
+    set_msk = set_msk[order]
+    dec = 1 / (nvar - 20)
+    null = np.array(
+        [
+            dc.mt._gsea._esrank.py_func(row=row[order], rnks=np.arange(nvar), set_msk=set_msk[i], dec=dec)[0]
+            for i in ridx
+        ]
+    )
+    assert (null < es[0]).all()
+    assert np.isclose(pv[0], 1 / ((null >= 0).sum() + 1))
 
 
 def test_stsgsea(
