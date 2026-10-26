@@ -1,61 +1,62 @@
 name: Test notebooks
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        defaults:
-            run:
-              # to fail on error in multiline statements (-e), in pipes (-o pipefail), and on unset variables (-u).
-              shell: bash -euo pipefail {0}
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # to fail on error in multiline statements (-e), in pipes (-o pipefail), and on unset variables (-u).
+        shell: bash -euo pipefail {0}
 
-        env:
-            NOTEBOOK_PATH: docs/notebooks
+    env:
+      NOTEBOOK_PATH: docs/notebooks
 
-        strategy:
-            fail-fast: false
-            matrix:
-                notebook: [
-                        "example.ipynb",
-                        "bench/rna.ipynb",
-                        "bulk/rna.ipynb",
-                        "omnipath/licenses.ipynb",
-                        "omnipath/orthologs.ipynb",
-                        "scell/rna_psbk.ipynb",
-                        "scell/rna_pstime.ipynb",
-                        "scell/rna_sc.ipynb",
-                        "spatial/rna_visium.ipynb",
-                    ]
+    strategy:
+      fail-fast: false
+      matrix:
+        notebook:
+          [
+            "example.ipynb",
+            "bench/rna.ipynb",
+            "bulk/rna.ipynb",
+            "omnipath/licenses.ipynb",
+            "omnipath/orthologs.ipynb",
+            "scell/rna_psbk.ipynb",
+            "scell/rna_pstime.ipynb",
+            "scell/rna_sc.ipynb",
+            "spatial/rna_visium.ipynb",
+          ]
 
-        steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-              with:
-                filter: blob:none
-                fetch-depth: 0
-                submodules: "true"
-                persist-credentials: false
-            - name: Set up Python
-              uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
-              with:
-                  python-version: "3.13"
-            - name: Install uv
-              uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
-            - name: Install dependencies
-              run: |
-                  uv pip install --system .
-                  uv pip install --system --group dev --group test
-                  uv pip install --system nbconvert ipykernel
-            - name: Run ${{ matrix.notebook }} Notebook
-              run: jupyter nbconvert --to notebook --execute ${{ env.NOTEBOOK_PATH }}/${{ matrix.notebook }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          filter: blob:none
+          fetch-depth: 0
+          submodules: "true"
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - name: Install dependencies
+        run: |
+          uv pip install --system .
+          uv pip install --system --group dev --group test
+          uv pip install --system nbconvert ipykernel
+      - name: Run ${{ matrix.notebook }} Notebook
+        run: jupyter nbconvert --to notebook --execute ${{ env.NOTEBOOK_PATH }}/${{ matrix.notebook }}

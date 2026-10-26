@@ -1,4 +1,5 @@
 # decoupler - Ensemble of methods to infer enrichment scores
+
 <img src="https://raw.githubusercontent.com/scverse/decoupler/refs/heads/main/docs/_static/images/logo.svg" align="right" width="120" class="no-scaled-link" />
 
 [![Tests][badge-tests]][tests]
@@ -29,7 +30,7 @@
 `decoupler` is a python package containing different enrichment statistical methods to extract biologically driven scores from omics data within a unified framework.
 This is its faster and memory efficient Python implementation, a deprecated version in R can be found [here](https://github.com/saezlab/decoupler).
 
-[//]: # (numfocus-fiscal-sponsor-attribution)
+[//]: # "numfocus-fiscal-sponsor-attribution"
 
 decoupler is part of the scverse® project ([website](https://scverse.org), [governance](https://scverse.org/about/roles)) and is fiscally sponsored by [NumFOCUS](https://numfocus.org/).
 If you like scverse® and want to support our mission, please consider making a tax-deductible [donation](https://numfocus.org/donate-to-scverse) to help the project pay for developer time, professional services, travel, workshops, and a variety of other needs.
@@ -99,6 +100,7 @@ For questions and help requests, you can reach out in the [scverse discourse][].
 If you found a bug, please use the [issue tracker][].
 
 ## License
+
 Enrichment methods inside decoupler can be used for academic or commercial purposes, except `viper` which holds a non-commercial license.
 
 The data redistributed by OmniPath does not have a single license, each original resource has its own. By default, `decoupler`
@@ -108,10 +110,10 @@ assumes an academic license, but commercial or nonprofit licenses can be specifi
 ## Citation
 
 > Badia-i-Mompel P., Vélez Santiago J., Braunger J., Geiss C., Dimitrov D.,
-Müller-Dott S., Taus P., Dugourd A., Holland C.H., Ramirez Flores R.O.
-and Saez-Rodriguez J. 2022. decoupleR: Ensemble of computational methods
-to infer biological activities from omics data. Bioinformatics Advances.
-<https://doi.org/10.1093/bioadv/vbac016>
+> Müller-Dott S., Taus P., Dugourd A., Holland C.H., Ramirez Flores R.O.
+> and Saez-Rodriguez J. 2022. decoupleR: Ensemble of computational methods
+> to infer biological activities from omics data. Bioinformatics Advances.
+> <https://doi.org/10.1093/bioadv/vbac016>
 
 [uv]: https://github.com/astral-sh/uv
 [scverse discourse]: https://discourse.scverse.org/

@@ -1,6 +1,7 @@
 # Datasets
 
 ## Bulk
+
 ```{eval-rst}
 .. module:: decoupler.ds
 .. currentmodule:: decoupler
@@ -13,6 +14,7 @@
 ```
 
 ## Single-cell
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
@@ -23,6 +25,7 @@
 ```
 
 ## Spatial
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
@@ -31,6 +34,7 @@
 ```
 
 ## Toy
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
@@ -40,6 +44,7 @@
 ```
 
 ## Utils
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
