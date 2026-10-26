@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning][].
 ## 2.3.1
 
 ### Bugfixes
+
 - Fixed `mt.zscore` swapping the `KSEA` and `RoKAI` flavors, restoring the behaviour of `decoupler<2`. Scores from the default `RoKAI` flavor change (#382)
 - Fixed `mt.gsea` giving p-values of 0 when no permutation reached the observed score. The observed score is now counted as one of the permutations, as in `mt.waggr` (#383)
 
