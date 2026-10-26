@@ -1,7 +1,7 @@
 # Benchmark
 
-
 ## Pipeline
+
 ```{eval-rst}
 .. module:: decoupler.bm
 .. currentmodule:: decoupler

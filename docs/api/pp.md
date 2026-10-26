@@ -1,6 +1,7 @@
 # Preprocessing
 
 ## Data
+
 ```{eval-rst}
 .. module:: decoupler.pp
 .. currentmodule:: decoupler
@@ -12,6 +13,7 @@
 ```
 
 ## Network
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
@@ -25,6 +27,7 @@
 ```
 
 ## AnnData
+
 ```{eval-rst}
 .. autosummary::
     :toctree: generated
