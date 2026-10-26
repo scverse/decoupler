@@ -12,10 +12,12 @@ and this project adheres to [Semantic Versioning][].
 
 ### Bugfixes
 - Fixed `mt.zscore` swapping the `KSEA` and `RoKAI` flavors, restoring the behaviour of `decoupler<2`. Scores from the default `RoKAI` flavor change (#382)
+- Fixed `mt.gsea` giving p-values of 0 when no permutation reached the observed score. The observed score is now counted as one of the permutations, as in `mt.waggr` (#383)
 
 ## 2.3.0
 
 ### Changes
+
 - Updated the bundled decoupler Agent Skill, and `decoupler-install-skills` now supports multiple agent frameworks
 - `pp.filter_by_prop` now defaults to `min_prop=0.1` (was `0.2`) to match the value used in the vignettes
 - `ds.msvisium` now returns log-normalized data (`sc.pp.normalize_total` + `sc.pp.log1p`), with the log-normalized matrix also stored in `adata.layers["norm"]`, instead of raw counts
@@ -23,6 +25,7 @@ and this project adheres to [Semantic Versioning][].
 - Updated to the scverse cookiecutter template v0.8.0 (hash-pinned GitHub Actions checked by zizmor, `prek` instead of `pre-commit`, `sphinx-design` instead of `sphinx-tabs`, shared Sphinx extensions from `scverse-misc`)
 
 ### Bugfixes
+
 - Fixed `mt.ora` selecting the bottom `nvar - n_up` features instead of the top `n_up` ones. Ranks are ascending, so the threshold is now `nvar - n_up`, restoring the behaviour of `decoupler<2`. With the default `n_up` (top 5%) this selected 95% of the features as observed, which also made `mt.ora` fail with `invalid contingency table` whenever `nvar - n_up` exceeded `n_bg` (#346)
 - Fixed `n_bm` in `mt.ora` selecting the bottom `n_bm - 1` features instead of `n_bm`
 - `mt.ora` now validates that `n_up` and `n_bm` do not overlap and that `n_bg` is large enough for the number of selected features, instead of failing inside the Fisher exact test
@@ -35,12 +38,14 @@ and this project adheres to [Semantic Versioning][].
 ## 2.2.0
 
 ### Added
+
 - Bundled a Claude Code [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) that teaches coding agents to use decoupler correctly (method selection, calling conventions, output locations, priors, datasets, and benchmarking)
 - Added the `decoupler-install-skills` console script to install the skill into `~/.claude/skills/decoupler/` (use `--force` to refresh after upgrading, or `--print-path` to point `CLAUDE_SKILLS_PATH` at the bundled copy in place)
 
 ## 2.1.6
 
 ### Bugfixes
+
 - Fixed `op.translate` (and every `op.resource` call for non-human organisms) failing with HTTP 404 after HGNC dropped the `genenames/` subtree from the EBI FTP mirror; the HCOP fifteen-column files are now fetched from the new HGNC Google Cloud Storage bucket (#303)
 - Removed a redundant `pd.read_csv` call in `op.translate` that re-downloaded the HCOP file a second time and bypassed the retry logic in `_download`
 - Fixed `bm.benchmark` ground-truth matrix row order not matching score matrix after `pivot`, which silently misaligned perturbation labels when obs names sort differently from their original order (#302)
@@ -48,29 +53,35 @@ and this project adheres to [Semantic Versioning][].
 ## 2.1.5
 
 ### Added
+
 - `pl.volcano` now accepts a gene name (`str`) or list of gene names (`list[str]`) for the `top` parameter to annotate specific features on volcano plots
 
 ### Changes
+
 - Refactored `ds.ensmbl_to_symbol` to reuse `_download` and fixed mirror fallback to actually switch between Ensembl mirrors
 - Made `tqdm` progress bar compact in `_download`
 
 ### Bugfixes
+
 - Fixed `pl.dotplot` ignoring `vcenter=0` due to falsy check (#293)
 - Fixed `_log` setting the root logging level to INFO for all packages (#296)
 
 ## 2.1.4
 
 ### Changes
+
 - Added `alternative` argument to `decoupler.mt.query_set`. By default `'greater'`, before it was `'two-sided'`
 - Unpinned `scipy` version limit
 
 ### Bugfixes
+
 - Fixed missing progressbar for `decoupler._download._download`
 - Added missing `decoupler.mt.query_set` documentation
 
 ## 2.1.3
 
 ### Changes
+
 - `pp.adjmat` now returns the same features as used as input instead of the subset of `net`
 - `pp.pseudobulk` now returns the same order features as used as input instead of shuffling them
 - Added a dedicated header and 5 attemps to `_download` to mitigate 429 Client Error from Zenodo downloads
@@ -78,6 +89,7 @@ and this project adheres to [Semantic Versioning][].
 ## 2.1.2
 
 ### Added
+
 - `pp.query_set` to test overlap between a given feature set against a database of sets
 
 ### Changes
@@ -89,10 +101,12 @@ and this project adheres to [Semantic Versioning][].
 ## 2.1.1
 
 ### Added
+
 - mypy checks in CI
 - notebook checks in CI
 
 ### Bugfixes
+
 - Fixed error in `decoupler.pp.pseudobulk` when `adata.obs_names` were not unique, now throws verbose error
 - Fixed corner case in `decoupler.mt.gsea` when p-values were infitite and could not be corrected
 
@@ -105,41 +119,49 @@ and this project adheres to [Semantic Versioning][].
 - Enrichment methods and pseudobulking now work with backed AnnData objects, useful when working with big datasets and memory is limited
 
 ### Bugfixes
+
 - Fixed error in `pl.obsm` where default value of `cmap_obs` was not properly set.
 
 ## 2.0.7
 
 ### Changes
+
 - Added `pre-commit` functionality to the repository
 
 ## 2.0.6
 
 ### Changes
+
 - Modified links and paths to follow scverse's repository
 
 ## 2.0.5
 
 ### Bugfixes
+
 - Fixed error message when extra dependencies where not installed
 
 ## 2.0.4
 
 ### Bugfixes
+
 - Fixed `dcor` import bug as an external dependency
 
 ## 2.0.3
 
 ### Bugfixes
+
 - Fixed error in `pp.pseudobulk` when obs columns were not categorical
 
 ## 2.0.2
 
 ### Changes
+
 - Allowed ordering functions (`pp.bin_order`, `pl.order` and `pl.order_targets`) not to be bound between 0 and 1
 - Added ipywidgets as dependency
 - Silenced xgboost warnings
 
 ### Bugfixes
+
 - Handled corner case in `bm.metric.auc` when scores are all 0
 - Fixed error in `bm.metric.hmean` when metrics were str instead of list
 - Fixed error when `obs` column is a list in `pp.pseudobulk`
@@ -147,6 +169,7 @@ and this project adheres to [Semantic Versioning][].
 ## 2.0.1
 
 ### Bugfixes
+
 - Fixed an error in `pp.pseudobulk` when handling empty samples or features
 
 ## 2.0.0
@@ -173,7 +196,7 @@ All functions have been rewritten to follow the new API, errors when running pre
   - Fixed `collectri` to the publication version instead of the OmniPath one
   - Made `progeny` only return significant genes by default instead of the top N genes per pathway
 - Plots are now in a new `pl` module
-    - Use `decoupler.pl.<plot_name>` to call a plot
+  - Use `decoupler.pl.<plot_name>` to call a plot
     - They use a common class `Plotter` to make it easier to share arguments between them
     - `plot_violins` has been deprecated
     - Names that have changed
@@ -193,7 +216,7 @@ All functions have been rewritten to follow the new API, errors when running pre
 ### Added
 
 - `ds` module with functions to download several datasets at different resolutions
-    - Bulk: `hsctgfb` and `knocktf`
+  - Bulk: `hsctgfb` and `knocktf`
     - Single-cell: `pbmc3k`, `covid5k` and `erygast1k`
     - Spatial: `msvisium`
     - Toy data: `toy` and `toy_bench`
