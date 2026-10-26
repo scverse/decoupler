@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning][].
 
 - Fixed `mt.zscore` swapping the `KSEA` and `RoKAI` flavors, restoring the behaviour of `decoupler<2`. Scores from the default `RoKAI` flavor change (#382)
 - Fixed `mt.gsea` giving p-values of 0 when no permutation reached the observed score. The observed score is now counted as one of the permutations, as in `mt.waggr` (#383)
+- Fixed `mt.waggr` aborting the Python process with numba's `workqueue` threading layer (default when TBB/OpenMP are unavailable, e.g. macOS arm64) due to nested parallel regions
 
 ## 2.3.0
 

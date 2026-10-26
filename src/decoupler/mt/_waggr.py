@@ -33,7 +33,7 @@ def _fun(
     verbose: bool = False,
 ):
     @nb.njit(parallel=True, cache=True)
-    def _f(mat, adj):
+    def _fp(mat, adj):
         nobs, nvar = mat.shape
         nvar, nsrc = adj.shape
         es = np.zeros((nobs, nsrc))
@@ -44,10 +44,22 @@ def _fun(
                 es[i, j] = f(x, w)
         return es
 
-    _f.__name__ = f.__name__
-    if _f.__name__ not in _cfuncs:
-        _cfuncs[f.__name__] = _f
-        m = f"waggr - using {_f.__name__} for the first time, will need to be compiled"
+    # Serial version to be called inside parallel regions (e.g. _perm), nested parallelism crashes workqueue
+    @nb.njit(cache=True)
+    def _fs(mat, adj):
+        nobs, nvar = mat.shape
+        nvar, nsrc = adj.shape
+        es = np.zeros((nobs, nsrc))
+        for i in range(nobs):
+            x = mat[i]
+            for j in range(nsrc):
+                w = adj[:, j]
+                es[i, j] = f(x, w)
+        return es
+
+    if f.__name__ not in _cfuncs:
+        _cfuncs[f.__name__] = (_fp, _fs)
+        m = f"waggr - using {f.__name__} for the first time, will need to be compiled"
         _log(m, level="info", verbose=verbose)
 
 
@@ -223,7 +235,7 @@ def _func_waggr(
     else:
         f_fun = fun
     _validate_func(f_fun, verbose=verbose)
-    vfun = _cfuncs[f_fun.__name__]
+    pfun, sfun = _cfuncs[f_fun.__name__]
     assert isinstance(times, int | float) and times >= 0, "times must be numeric and >= 0"
     assert isinstance(seed, int | float) and seed >= 0, "seed must be numeric and >= 0"
     times, seed = int(times), int(seed)
@@ -231,12 +243,12 @@ def _func_waggr(
     nvar, nsrc = adj.shape
     m = f"waggr - calculating scores for {nsrc} sources across {nobs} observations"
     _log(m, level="info", verbose=verbose)
-    es = vfun(mat, adj)
+    es = pfun(mat, adj)
     if times > 1:
         m = f"waggr - comparing estimates against {times} random permutations"
         _log(m, level="info", verbose=verbose)
         idx = _ridx(times=times, nvar=nvar, seed=seed)
-        es, pv = _perm(fun=vfun, es=es, mat=mat, adj=adj, idx=idx)
+        es, pv = _perm(fun=sfun, es=es, mat=mat, adj=adj, idx=idx)
     else:
         pv = np.ones(es.shape)
     return es, pv
