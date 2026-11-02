@@ -6,3 +6,20 @@ div.cell_output table.dataframe {
 img.no-scaled-link {
     background: transparent !important;
 }
+
+/* Keep the sidebar logo at about the size of the one on the landing page, centered */
+.bd-sidebar-primary .navbar-brand {
+    justify-content: center;
+}
+
+.navbar-brand img.logo__image {
+    width: 120px;
+    height: auto;
+}
+
+/* Narrow the left sidebar back to sphinx-book-theme's 20% (pydata's default is 25%) */
+@media (min-width: 992px) {
+    .bd-sidebar-primary {
+        width: 20%;
+    }
+}
