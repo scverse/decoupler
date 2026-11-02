@@ -6,3 +6,9 @@ div.cell_output table.dataframe {
 img.no-scaled-link {
     background: transparent !important;
 }
+
+/* Keep the sidebar logo at about the size of the one on the landing page */
+.navbar-brand img.logo__image {
+    width: 120px;
+    height: auto;
+}
