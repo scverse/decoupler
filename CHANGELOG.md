@@ -229,7 +229,7 @@ All functions have been rewritten to follow the new API, errors when running pre
   - Added `obsbar` to plot size of metadata columns in `anndata.AnnData.obs`
   - Added `order` to plot sources or features along a continous process such as a trajectory
   - Added `order_targets` to plot the targets of a given source along a continous process
-  -
+  - 
 - New preprocessing functions in the `pp` module
   - Added two functions to format networks, `adjmat` to return an adjacency matrix, and `idxmax` to return a list of sets
   - Added `filter_samples` to filter pseudobulk profiles after running `pseudobulk`

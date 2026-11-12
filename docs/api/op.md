@@ -7,22 +7,22 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    op.collectri
-    op.dorothea
-    op.hallmark
-    op.progeny
-    op.resource
+   op.collectri
+   op.dorothea
+   op.hallmark
+   op.progeny
+   op.resource
 ```
 
 ## Utils
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    op.show_resources
-    op.show_organisms
-    op.translate
+   op.show_resources
+   op.show_organisms
+   op.translate
 ```

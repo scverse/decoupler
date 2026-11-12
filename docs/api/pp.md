@@ -7,37 +7,37 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    pp.extract
+   pp.extract
 ```
 
 ## Network
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    pp.read_gmt
-    pp.prune
-    pp.adjmat
-    pp.idxmat
-    pp.shuffle_net
-    pp.net_corr
+   pp.read_gmt
+   pp.prune
+   pp.adjmat
+   pp.idxmat
+   pp.shuffle_net
+   pp.net_corr
 ```
 
 ## AnnData
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    pp.get_obsm
-    pp.swap_layer
-    pp.pseudobulk
-    pp.filter_samples
-    pp.filter_by_expr
-    pp.filter_by_prop
-    pp.knn
-    pp.bin_order
+   pp.get_obsm
+   pp.swap_layer
+   pp.pseudobulk
+   pp.filter_samples
+   pp.filter_by_expr
+   pp.filter_by_prop
+   pp.knn
+   pp.bin_order
 ```

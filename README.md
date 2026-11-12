@@ -40,7 +40,7 @@ If you like scverse® and want to support our mission, please consider making a 
   <img
     src="https://raw.githubusercontent.com/numfocus/templates/master/images/numfocus-logo.png"
     width="200"
-  >
+>
 </a>
 </div>
 
@@ -52,7 +52,7 @@ in particular, the [API documentation][].
 ## Installation
 
 You need to have Python 3.12 or newer installed on your system.
-If you don't have Python installed, we recommend installing [uv][].
+If you don’t have Python installed, we recommend installing [uv][].
 
 There are several alternative options to install decoupler:
 
@@ -82,7 +82,7 @@ pip install git+https://github.com/scverse/decoupler.git@main
 
 ## Agent Skill
 
-decoupler ships an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) that teaches coding agents to use the library correctly. Install it into your agent's skills directory by choosing a framework with `--agent {claude,codex,agents,claude-science}` (or an explicit directory with `--dest`):
+decoupler ships an [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) that teaches coding agents to use the library correctly. Install it into your agent’s skills directory by choosing a framework with `--agent {claude,codex,agents,claude-science}` (or an explicit directory with `--dest`):
 
 ```bash
 decoupler-install-skills --agent claude
@@ -104,7 +104,7 @@ If you found a bug, please use the [issue tracker][].
 Enrichment methods inside decoupler can be used for academic or commercial purposes, except `viper` which holds a non-commercial license.
 
 The data redistributed by OmniPath does not have a single license, each original resource has its own. By default, `decoupler`
-assumes an academic license, but commercial or nonprofit licenses can be specified in the `license` parameter of `decoupler`'s OmniPath functions.
+assumes an academic license, but commercial or nonprofit licenses can be specified in the `license` parameter of `decoupler`’s OmniPath functions.
 [Here](https://omnipathdb.org/info) one can find the license information of all the resources in OmniPath.
 
 ## Citation

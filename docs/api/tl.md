@@ -5,9 +5,9 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    tl.rankby_group
-    tl.rankby_obsm
-    tl.rankby_order
+   tl.rankby_group
+   tl.rankby_obsm
+   tl.rankby_order
 ```

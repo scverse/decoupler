@@ -7,9 +7,9 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    bm.benchmark
+   bm.benchmark
 ```
 
 ## Metrics
@@ -19,12 +19,12 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    bm.metric.auc
-    bm.metric.fscore
-    bm.metric.qrank
-    bm.metric.hmean
+   bm.metric.auc
+   bm.metric.fscore
+   bm.metric.qrank
+   bm.metric.hmean
 ```
 
 ## Plotting
@@ -34,11 +34,11 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    bm.pl.auc
-    bm.pl.fscore
-    bm.pl.qrank
-    bm.pl.bar
-    bm.pl.summary
+   bm.pl.auc
+   bm.pl.fscore
+   bm.pl.qrank
+   bm.pl.bar
+   bm.pl.summary
 ```
