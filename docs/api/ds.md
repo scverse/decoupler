@@ -7,47 +7,47 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    ds.hsctgfb
-    ds.knocktf
+   ds.hsctgfb
+   ds.knocktf
 ```
 
 ## Single-cell
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    ds.covid5k
-    ds.erygast1k
-    ds.pbmc3k
+   ds.covid5k
+   ds.erygast1k
+   ds.pbmc3k
 ```
 
 ## Spatial
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    ds.msvisium
+   ds.msvisium
 ```
 
 ## Toy
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    ds.toy
-    ds.toy_bench
+   ds.toy
+   ds.toy_bench
 ```
 
 ## Utils
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    ds.ensmbl_to_symbol
+   ds.ensmbl_to_symbol
 ```

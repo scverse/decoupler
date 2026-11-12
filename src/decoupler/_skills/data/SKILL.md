@@ -1,12 +1,11 @@
 ---
-
 name: decoupler
 description: Read before any task that mentions decoupler, one of its bundled example datasets, or asks which transcription factors (TFs), pathways, or gene sets are most active, enriched, up or down in expression data - bulk RNA-seq treated vs control, single-cell cell types or clusters, condition contrasts across donors (pseudobulk), spatial transcriptomics regions or niches, and pseudotime or differentiation trajectories - with the exact 2.x workflow (dc.op networks, dc.pp preprocessing, dc.mt scoring, dc.tl ranking) that reproduces the documented results. Also covers decoupler's networks (CollecTRI, PROGENy, DoRothEA, MSigDB), supported organisms/species and ortholog translation, resource licenses, and the conventions for plotting or visualizing its results. Also read for conceptual, best-practice or multiple-choice questions about how an agent should work with decoupler.
 ---
 
 # decoupler 2.x
 
-decoupler scores "sources" (TFs, pathways, gene sets) from a long-format `net` DataFrame with
+decoupler scores “sources” (TFs, pathways, gene sets) from a long-format `net` DataFrame with
 columns `source`, `target`, and optionally `weight`. The 2.x API is `dc.pp` (preprocess),
 `dc.op` (download networks from OmniPath), `dc.mt` (scoring methods), `dc.tl` (ranking),
 `dc.pl` (plots), `dc.ds` (example datasets). The 1.x functions (`run_ulm`, `get_progeny`,
@@ -49,17 +48,17 @@ columns `source`, `target`, and optionally `weight`. The 2.x API is `dc.pp` (pre
 
 ## Pick the recipe from the goal
 
-| Goal                                                                       | Recipe                                                                                    |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Activity per cell, cluster or cell type, then "which sources mark group X" | **Per-observation** below                                                                 |
-| Activity per spatial spot, region vs rest                                  | **Spatial** below (smooth first)                                                          |
-| Sources that change along a trajectory or pseudotime                       | **Trajectory** below                                                                      |
-| Condition A vs B in bulk RNA-seq (samples)                                 | **Contrast** in `references/contrast.md`                                                  |
-| Condition A vs B in single-cell with several donors or samples             | **Pseudobulk contrast** in `references/contrast.md`                                       |
-| Networks, organisms, orthologs, licenses, what resources exist             | `references/resources.md`                                                                 |
-| Plotting results                                                           | Use `dc.pl.*` or scanpy plotting on the `get_obsm` AnnData, see `references/resources.md` |
+  | Goal                                                                       | Recipe                                                                                    |
+  | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+  | Activity per cell, cluster or cell type, then “which sources mark group X” | **Per-observation** below                                                                 |
+  | Activity per spatial spot, region vs rest                                  | **Spatial** below (smooth first)                                                          |
+  | Sources that change along a trajectory or pseudotime                       | **Trajectory** below                                                                      |
+  | Condition A vs B in bulk RNA-seq (samples)                                 | **Contrast** in `references/contrast.md`                                                  |
+  | Condition A vs B in single-cell with several donors or samples             | **Pseudobulk contrast** in `references/contrast.md`                                       |
+  | Networks, organisms, orthologs, licenses, what resources exist             | `references/resources.md`                                                                 |
+  | Plotting results                                                           | Use `dc.pl.*` or scanpy plotting on the `get_obsm` AnnData, see `references/resources.md` |
 
-"Most active TFs in condition X vs Y" with replicate samples or donors means the contrast recipe
+“Most active TFs in condition X vs Y” with replicate samples or donors means the contrast recipe
 (differential expression statistic → `ulm`), **not** per-cell scores averaged by condition and
 **not** `rankby_group` on the condition column. Per-observation scoring + `rankby_group` is for
 comparing groups of cells within one dataset (cell types, clusters, niches). The contrast recipe,
@@ -118,7 +117,7 @@ df = dc.tl.rankby_group(adata=score, groupby="<region_col>", reference="rest",
 
 ### Trajectory or pseudotime
 
-"Associated with the trajectory or differentiation" means: compute scanpy DPT pseudotime, score
+“Associated with the trajectory or differentiation” means: compute scanpy DPT pseudotime, score
 sources per cell, then `rankby_order` on the pseudotime with its default statistic. Root the
 diffusion pseudotime in the **biologically earliest** population: the stem or progenitor label,
 and when several progenitor labels are numbered, the lowest-numbered one (print the label list

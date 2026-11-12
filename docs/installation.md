@@ -1,7 +1,7 @@
 # Installation
 
 You need Python 3.12 or newer.
-If you don't have Python installed, we recommend [uv](https://github.com/astral-sh/uv).
+If you don’t have Python installed, we recommend [uv](https://github.com/astral-sh/uv).
 
 ## PyPI
 

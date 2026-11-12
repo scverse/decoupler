@@ -1,6 +1,6 @@
 # Contrast-level activity (bulk and pseudobulk)
 
-"Which TFs or pathways are most active in condition A vs B" across replicate samples is answered
+“Which TFs or pathways are most active in condition A vs B” across replicate samples is answered
 by running `ulm` on a **differential-expression statistic**, never by averaging per-sample or
 per-cell scores. The documented route is: raw integer counts → gene filtering → PyDESeq2
 Wald test → `ulm` on the `stat` column with CollecTRI, PROGENy or Hallmark.
@@ -16,7 +16,7 @@ pdata = dc.pp.pseudobulk(adata=adata, sample_col="<sample or donor col>",
 
 `pseudobulk` requires raw integer counts in `.X` (or pass `layer=`); it refuses normalized data
 unless `skip_checks=True`. Output obs gets `psbulk_cells` and `psbulk_counts`, and obs columns
-that are constant within each sample×group (disease, sex, ...) are carried over. Then drop
+that are constant within each sample×group (disease, sex, …) are carried over. Then drop
 low-quality pseudobulk samples with the defaults:
 
 ```python
@@ -40,7 +40,7 @@ Both modify in place. Use `group=` the condition column. `dc.pl.filter_by_expr` 
 `dc.pl.filter_by_prop` with the same arguments preview the thresholds.
 
 If you normalize for PCA or QC, keep counts in a layer and swap them back before DESeq2:
-`adata.layers["counts"] = adata.X.copy()` ... `dc.pp.swap_layer(adata, key="counts", inplace=True)`.
+`adata.layers["counts"] = adata.X.copy()` … `dc.pp.swap_layer(adata, key="counts", inplace=True)`.
 
 ## 3. PyDESeq2 Wald statistic
 

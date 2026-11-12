@@ -7,36 +7,36 @@
 .. currentmodule:: decoupler
 
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    mt.aucell
-    mt.gsea
-    mt.gsva
-    mt.mdt
-    mt.mlm
-    mt.ora
-    mt.udt
-    mt.ulm
-    mt.viper
-    mt.waggr
-    mt.zscore
+   mt.aucell
+   mt.gsea
+   mt.gsva
+   mt.mdt
+   mt.mlm
+   mt.ora
+   mt.udt
+   mt.ulm
+   mt.viper
+   mt.waggr
+   mt.zscore
 ```
 
 ## Multiple methods
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    mt.decouple
-    mt.consensus
+   mt.decouple
+   mt.consensus
 ```
 
 ## Miscellaneous
 
 ```{eval-rst}
 .. autosummary::
-    :toctree: generated
+   :toctree: generated
 
-    mt.query_set
+   mt.query_set
 ```

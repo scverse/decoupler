@@ -5,14 +5,14 @@
 All return a long DataFrame with `source`, `target`, and `weight` (plus extra metadata columns
 that `dc.mt.*` ignores). Verify by running; downloads come from OmniPath and need network access.
 
-| Function                                                    | What                                                                          | Notes                                                           |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| `dc.op.collectri(organism="human", remove_complexes=False)` | TF → target regulons (CollecTRI), signed weights                              | Default TF network in all 2.x vignettes                         |
-| `dc.op.dorothea(organism="human", levels=None)`             | Older TF regulons with confidence levels A–E                                  | Only when the user asks for DoRothEA                            |
-| `dc.op.progeny(organism="human", top=inf, thr_padj=0.05)`   | 14 signalling pathways, weighted footprint genes                              | `top` defaults to all significant targets; do not add `top=500` |
-| `dc.op.hallmark(organism="human")`                          | MSigDB hallmark gene sets, unweighted                                         |                                                                 |
-| `dc.op.resource(name, organism="human")`                    | Any OmniPath annotation resource (e.g. `"PanglaoDB"`, `"SIGNOR"`, `"MSigDB"`) | You must rename columns to `source` and `target` yourself       |
-| `dc.op.show_resources()`                                    | DataFrame `name, license` of every resource                                   |                                                                 |
+  | Function                                                    | What                                                                          | Notes                                                           |
+  | ----------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
+  | `dc.op.collectri(organism="human", remove_complexes=False)` | TF → target regulons (CollecTRI), signed weights                              | Default TF network in all 2.x vignettes                         |
+  | `dc.op.dorothea(organism="human", levels=None)`             | Older TF regulons with confidence levels A–E                                  | Only when the user asks for DoRothEA                            |
+  | `dc.op.progeny(organism="human", top=inf, thr_padj=0.05)`   | 14 signalling pathways, weighted footprint genes                              | `top` defaults to all significant targets; do not add `top=500` |
+  | `dc.op.hallmark(organism="human")`                          | MSigDB hallmark gene sets, unweighted                                         |                                                                 |
+  | `dc.op.resource(name, organism="human")`                    | Any OmniPath annotation resource (e.g. `"PanglaoDB"`, `"SIGNOR"`, `"MSigDB"`) | You must rename columns to `source` and `target` yourself       |
+  | `dc.op.show_resources()`                                    | DataFrame `name, license` of every resource                                   |                                                                 |
 
 Custom gene sets: `dc.pp.read_gmt(path)` → `source, target` DataFrame. Any DataFrame with
 those columns works as `net`.
@@ -64,7 +64,7 @@ runs several methods (each stored under its own key); `dc.mt.consensus(adata)` a
 
 ## Plotting convention
 
-Use decoupler's own `dc.pl.*` functions, or scanpy plotting on the `dc.pp.get_obsm` AnnData
+Use decoupler’s own `dc.pl.*` functions, or scanpy plotting on the `dc.pp.get_obsm` AnnData
 (`sc.pl.umap(score, color=[...])`, `sc.pl.violin`, `sc.pl.matrixplot`, `sc.pl.spatial`), rather
 than hand-rolled matplotlib, unless the user explicitly asks for a custom plot. If a `dc.pl` call
 errors, fix the arguments; do not silently fall back to a custom plot. Key functions:
